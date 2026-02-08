@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Valentine 💖</title>
 
-<!-- Instagram-style font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -14,7 +13,7 @@ body {
   margin: 0;
   height: 100vh;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+  background: linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4);
   background-size: 400% 400%;
   animation: bgMove 8s ease infinite;
   display: flex;
@@ -29,22 +28,53 @@ body {
   100% { background-position: 0% 50%; }
 }
 
+/* Instagram Card */
 .card {
   background: white;
-  width: 350px;
-  padding: 30px;
-  border-radius: 22px;
-  text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  width: 360px;
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  overflow: hidden;
   position: relative;
-  z-index: 10;
+  z-index: 5;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+}
+
+.dp {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(45deg,#ff2d55,#ff9500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: 600;
+}
+
+/* Content */
+.content {
+  padding: 25px;
+  text-align: center;
 }
 
 h1 {
   font-size: 22px;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
+/* Buttons */
 .btn {
   padding: 14px 30px;
   border: none;
@@ -52,7 +82,6 @@ h1 {
   font-size: 20px;
   cursor: pointer;
   margin: 10px;
-  transition: all 0.3s ease;
 }
 
 .yes {
@@ -62,9 +91,9 @@ h1 {
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); box-shadow: 0 0 0 rgba(255,45,85,0.7); }
-  50% { transform: scale(1.12); box-shadow: 0 0 25px rgba(255,45,85,0.9); }
-  100% { transform: scale(1); box-shadow: 0 0 0 rgba(255,45,85,0.7); }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 
 .no {
@@ -72,61 +101,98 @@ h1 {
   position: absolute;
 }
 
+/* Footer icons */
+.footer {
+  padding: 12px;
+  display: flex;
+  gap: 12px;
+  font-size: 22px;
+}
+
 /* Floating hearts */
 .heart {
   position: absolute;
   bottom: -20px;
-  font-size: 20px;
+  font-size: 18px;
   animation: floatUp 6s linear infinite;
-  opacity: 0.7;
 }
 
 @keyframes floatUp {
-  0% { transform: translateY(0) scale(1); opacity: 1; }
-  100% { transform: translateY(-110vh) scale(1.8); opacity: 0; }
+  to { transform: translateY(-110vh) scale(1.6); opacity: 0; }
 }
 
-/* Star burst */
-.star {
-  position: absolute;
-  color: gold;
-  font-size: 18px;
-  animation: starMove 1.5s forwards;
+/* YES screen */
+.fullscreen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(45deg,#ff2d55,#ff9500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  text-align: center;
+  z-index: 999;
 }
 
-@keyframes starMove {
-  0% { transform: scale(0); opacity: 1; }
-  100% { transform: translate(var(--x), var(--y)) scale(1); opacity: 0; }
+.fullscreen h1 {
+  font-size: 70px;
+  margin: 0;
+}
+
+.fullscreen p {
+  font-size: 28px;
+  margin-top: 15px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Music -->
-<iframe width="0" height="0"
-src="https://www.youtube.com/embed/2Vv-BfVoq4g?autoplay=1&loop=1&playlist=2Vv-BfVoq4g"
-allow="autoplay"></iframe>
+<!-- Audio (starts after first interaction) -->
+<audio id="music" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
 
-<div class="card">
-  <h1>Tanushree 💖<br>Will you be my Valentine?</h1>
-  <button class="btn yes" onclick="yesClick()">YES 😍</button>
-  <button class="btn no" id="noBtn">NO 🙃</button>
+<div class="card" onclick="startMusic()">
+  <div class="header">
+    <div class="dp">❤️</div>
+    <div class="username">your_crush_story</div>
+  </div>
+
+  <div class="content">
+    <h1>Tanushree 💖<br>Will you be my Valentine?</h1>
+    <button class="btn yes" onclick="yesClick()">YES 😍</button>
+    <button class="btn no" id="noBtn">NO 🙃</button>
+  </div>
+
+  <div class="footer">
+    ❤️ 💬 ✈️ 🔖
+  </div>
 </div>
 
 <script>
-// Floating hearts
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "💖";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 20 + 15 + "px";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
-}, 400);
+const music = document.getElementById("music");
+let musicStarted = false;
 
-// NO button escape
+function startMusic() {
+  if (!musicStarted) {
+    music.play();
+    musicStarted = true;
+  }
+}
+
+// Hearts
+setInterval(() => {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "💖";
+  h.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 6000);
+}, 500);
+
+// NO escape
 const noBtn = document.getElementById("noBtn");
 noBtn.addEventListener("mouseover", moveNo);
 noBtn.addEventListener("click", moveNo);
@@ -136,26 +202,12 @@ function moveNo() {
   noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
 }
 
-// YES click effect
+// YES action
 function yesClick() {
-  for (let i = 0; i < 30; i++) {
-    const star = document.createElement("div");
-    star.className = "star";
-    star.innerHTML = "✨";
-    const angle = Math.random() * Math.PI * 2;
-    const radius = Math.random() * 120;
-    star.style.setProperty("--x", Math.cos(angle) * radius + "px");
-    star.style.setProperty("--y", Math.sin(angle) * radius + "px");
-    star.style.left = "50%";
-    star.style.top = "50%";
-    document.body.appendChild(star);
-    setTimeout(() => star.remove(), 1500);
-  }
-
   document.body.innerHTML = `
-    <div style="color:white;text-align:center;">
-      <h1 style="font-size:60px;">YES 💖✨</h1>
-      <p style="font-size:26px;">Tanushree, you just made my heart skip a beat 🥰</p>
+    <div class="fullscreen">
+      <h1>YES 💖✨</h1>
+      <p>Tanushree, this just became my favorite love story 🥰</p>
     </div>
   `;
 }
