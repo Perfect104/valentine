@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  height:100vh;
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+/* Instagram post — half screen */
+.ig-post{
+  width:360px;
+  height:55vh;          /* ~ half of 7-inch screen */
+  background:white;
+  border-radius:18px;
+  box-shadow:0 15px 40px rgba(0,0,0,.3);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+/* Header */
+.header{
+  display:flex;
+  align-items:center;
+  padding:10px 12px;
+}
+.dp{
+  width:34px;height:34px;
+  border-radius:50%;
+  background:linear-gradient(45deg,#ff2d55,#ff9500);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:600;
+  margin-right:10px;
+}
+.username{font-weight:600;font-size:14px}
+
+/* Content */
+.content{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  text-align:center;
+}
+h1{
+  font-size:20px;
+  margin-bottom:18px;
+}
+
+/* Buttons */
+.btn{
+  padding:12px 26px;
+  border:none;
+  border-radius:30px;
+  font-size:18px;
+  margin:8px;
+  cursor:pointer;
+}
+
+.yes{
+  background:#ff2d55;
+  color:white;
+  animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.18)}
+  100%{transform:scale(1)}
+}
+
+.no{
+  background:#eee;
+  position:absolute;
+}
+
+/* Footer icons */
+.footer{
+  padding:10px 12px;
+  font-size:20px;
+}
+
+/* Floating hearts */
+.heart{
+  position:absolute;
+  bottom:-20px;
+  animation:floatUp 6s linear infinite;
+  opacity:.8;
+}
+@keyframes floatUp{
+  to{transform:translateY(-110vh) scale(1.6);opacity:0}
+}
+
+/* YES fullscreen */
+.fullscreen{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(45deg,#ff2d55,#ff9500);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  text-align:center;
+  z-index:999;
+}
+.fullscreen h1{font-size:75px;margin:0}
+.fullscreen p{font-size:28px;margin-top:15px}
+</style>
+</head>
+
+<body>
+
+<!-- Piano instrumental (Perfect-style opening) -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/10/09/audio_9f3e1e8a89.mp3">
+</audio>
+
+<div class="ig-post" onclick="startMusic()">
+  <div class="header">
+    <div class="dp">❤️</div>
+    <div class="username">love.story</div>
+  </div>
+
+  <div class="content">
+    <h1>Tanushree 💖<br>Will you be my Valentine?</h1>
+    <button class="btn yes" onclick="yes()">YES 😍</button>
+    <button class="btn no" id="no">NO 🙃</button>
+  </div>
+
+  <div class="footer">❤️ 💬 ✈️ 🔖</div>
+</div>
+
+<script>
+/* Music start on first tap */
+const music=document.getElementById("music");
+let played=false;
+function startMusic(){
+  if(!played){music.play();played=true;}
+}
+
+/* Floating hearts */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💖";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=14+Math.random()*18+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},500);
+
+/* NO button escape */
+const no=document.getElementById("no");
+no.onmouseover=no.onclick=()=>{
+  no.style.left=Math.random()*250+"px";
+  no.style.top=Math.random()*400+"px";
+}
+
+/* YES */
+function yes(){
+  document.body.innerHTML=`
+    <div class="fullscreen">
+      <h1>YES 💖✨</h1>
+      <p>Tanushree, this just became my favorite moment 🥰</p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
